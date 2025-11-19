@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -17,26 +17,16 @@ def get_user(userid):
     return jsonify({"user": users_info[userid]})
     
 
-@app.route('/users/one', methods=["POST"])
-def add_user():
-    """
-    ユーザー情報を一人分追加する API
-    """
-    data = {"id":"2", "name":"tanaka"}  # 仮データ
-    users_info.append(data)
-    return jsonify({"users": users_info})
-
-@app.route('/users/multiple', methods=["POST"])
+@app.route('/users', methods=["POST"])
 def add_users():
     """
-    ユーザー情報を複数追加する API
+    ユーザー情報を追加する API
     """
-    add_users_info = [
-         {"id":"3", "name":"sato"},
-         {"id":"4", "name":"takahashi"},
-         {"id":"5", "name":"ito"}
-    ]
-    users_info.extend(add_users_info)
+    data = request.get_json()
+    if isinstance(data, dict):
+        users_info.append(data)
+    elif isinstance(data, list):
+        users_info.extend(data)
     return jsonify({"users": users_info})
 
 
@@ -64,7 +54,7 @@ def update_user(userid):
     """
     ユーザー情報を一部更新する
     """
-    new_data = {"name": "name_updated"}
+    new_data = request.get_json()
     for user in users_info:
         if userid == user["id"]:
             user.update(new_data)

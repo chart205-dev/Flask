@@ -18,7 +18,7 @@ class PurchaseService:
     @staticmethod
     def get_all_purchases():
         try:
-            purchases = Purchase.query.order_by(Purchase.created_at.desc()).all()
+            purchases = Purchase.query.order_by(Purchase.purchased_at.desc()).all()
             return purchases
         except SQLAlchemyError as e:
             raise Exception(f"Purchase retrieval error: {str(e)}")

@@ -7,7 +7,7 @@ class Config:
     SQLALCHEMY_ECHO = True
 
 class DevelopmentConfig(Config):
-     SQLALCHEMY_DATABASE_URI = "postgresql://postgres:pasword@localhost:5432/flask_api_db"
+     SQLALCHEMY_DATABASE_URI = "postgresql://postgres:pass@localhost:5432/flask_api_db"
      DEBUG = True
      TESTING = False
 

@@ -10,3 +10,5 @@ def load_item_cache(app):
     item_cache = {item.item_name: item.id for item in items}
     print("Item cache loaded:", item_cache)
 
+def get_item_cache():
+	return item_cache

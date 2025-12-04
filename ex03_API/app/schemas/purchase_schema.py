@@ -3,17 +3,16 @@ from app.models.item_model import Item
 
 class PurchaseSchema(Schema):
     id = fields.Int(dump_only=True)
-
-    item_id = fields.Int(
+    
+    item_name = fields.Str(
         required=True,
-        validate=validate.Range(min=1)
-    )
-
-    @validates('item_id')
-    def validate_item_id(self, value):
-        # DBに存在するかチェック
-        if not Item.query.get(value):
-            raise ValidationError(f"Item with id {value} does not exist.")
+        validate=validate.Length(min=1),
+        error_messages={
+            'required': 'item_name is required.'
+            }
+    ) 
+    
+    item_id = fields.Int(required=False)
 
     quantity = fields.Int(
         required=True,
